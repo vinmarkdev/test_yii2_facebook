@@ -21,6 +21,7 @@ DIRECTORY STRUCTURE
       controllers/        contains Web controller classes
       mail/               contains view files for e-mails
       models/             contains model classes
+      migrations/         contains all DB migrations
       runtime/            contains files generated during runtime
       tests/              contains various tests for the basic application
       vendor/             contains dependent 3rd-party packages
@@ -46,15 +47,16 @@ at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
 You can then install this project template using the following command:
 
 ~~~
-php composer.phar global require "fxp/composer-asset-plugin:^1.3.1"
-php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
+cloned project from GitHub
+Run console in root folder
+run "composer install"
 ~~~
 
 Now you should be able to access the application through the following URL, assuming `basic` is the directory
 directly under the Web root.
 
 ~~~
-http://localhost/basic/web/
+http://localhost/root/web/
 ~~~
 
 
@@ -75,7 +77,7 @@ Set cookie validation key in `config/web.php` file to some random secret string:
 You can then access the application through the following URL:
 
 ~~~
-http://localhost/basic/web/
+http://localhost/root/web/
 ~~~
 
 
