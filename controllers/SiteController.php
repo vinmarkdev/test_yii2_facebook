@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
-use SdkFacebook;
+//use SdkFacebook\SdkFacebook;
 
 class SiteController extends Controller
 {
@@ -73,7 +73,9 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        
+        $fb = new SdkFacebook();
+        $scope = null;
+        $fb->getLoginUrl("http://test.com",$scope );
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -83,6 +85,30 @@ class SiteController extends Controller
             return $this->goBack();
         }
         return $this->render('login', [
+            'model' => $model,
+            'scope' => $scope
+        ]);
+    }
+
+    /**
+     * Signup action.
+     *
+     * @return Response|string
+     */
+    public function actionSignup()
+    {
+        /*$fb = new SdkFacebook();
+        $scope = null;
+        $fb->getLoginUrl("http://test.com",$scope );*/
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+        return $this->render('signup', [
             'model' => $model
         ]);
     }
