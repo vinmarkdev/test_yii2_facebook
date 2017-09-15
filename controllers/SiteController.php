@@ -7,8 +7,10 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 
 //use SdkFacebook\SdkFacebook;
 
@@ -22,10 +24,9 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','index','users'],
                 'rules' => [
                     [
-                        'actions' => ['logout','index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -34,7 +35,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post']
                 ],
             ],
         ];
@@ -73,30 +74,6 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $fb = new SdkFacebook();
-        $scope = null;
-        $fb->getLoginUrl("http://test.com",$scope );
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-            'scope' => $scope
-        ]);
-    }
-
-    /**
-     * Signup action.
-     *
-     * @return Response|string
-     */
-    public function actionSignup()
-    {
         /*$fb = new SdkFacebook();
         $scope = null;
         $fb->getLoginUrl("http://test.com",$scope );*/
@@ -108,6 +85,29 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
+        return $this->render('login', [
+            'model' => $model,
+            /*'scope' => $scope*/
+        ]);
+    }
+
+    /**
+     * Signup action.
+     *
+     * @return Response|string
+     */
+    public function actionSignup()
+    {
+
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new User();
+        $model->password = null;
+        /*if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }*/
         return $this->render('signup', [
             'model' => $model
         ]);
@@ -153,4 +153,13 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionUsers()
+    {
+        return $this->render('users');
+    }
 }
