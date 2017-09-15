@@ -15,13 +15,12 @@ class m170914_224852_create_users_table extends Migration
         $this->createTable('users', [
             'id' => $this->primaryKey(),
             'username' => $this->string(255)->notNull(),
-            'password_hash' => $this->text()->notNull(),
-            'auth_key' => $this->text(),
+            'password_hash' => $this->string(255)->notNull(),
             'email' => $this->string(255)->notNull()->unique(),
+            'auth_key' => $this->string(32),
             'status' =>  $this->integer(2)->notNull(),
-            'role' => $this->string(100)->notNull(),
-            'created_at' => $this->timestamp()->notNull(),
-            'updated_at' => $this->timestamp()->notNull()
+            'created_at' => $this->integer(13)->notNull(),
+            'updated_at' => $this->integer(13)->notNull()
         ]);
     }
 
