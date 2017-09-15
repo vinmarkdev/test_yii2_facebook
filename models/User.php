@@ -4,9 +4,22 @@ namespace app\models;
 
 use Yii;
 
+/**
+ * Class User
+ *
+ * @property integer $id
+ * @property integer $status
+ * @property integer $create_at
+ * @property integer $updated_at
+ * @property integer $tell_number
+ * @property string $username
+ * @property string $email
+ * @property string $auth_key
+ * @property string $password_hash
+ */
 class User extends \yii\db\ActiveRecord
 {
-    public $password;
+    
     /**
      * @inheritdoc
      */
@@ -21,17 +34,13 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['username', 'password_hash', 'created_at', 'updated_at', 'status', 'tell_number'], 'required'],
 
-            [['status'], 'integer', 'max' => 2],
-            [['tell_number'], 'integer', 'max' => 13],
-            [['created_at', 'updated_at'], 'integer', 'max' => 255],
+            [['status','created_at', 'updated_at', 'tell_number'], 'integer'],
 
-            [['username', 'password_hash', 'email'], 'string', 'max' => 255],
-
-            [['auth_key'], 'string', 'max' => 32],
-
-            [['email'], 'unique']
+            [['username', 'password_hash', 'email', 'auth_key'], 'string', 'max' => 255],
+            
+            [['email', 'tell_number'], 'unique']
         ];
     }
 
